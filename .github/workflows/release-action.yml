@@ -1,0 +1,26 @@
+
+name: Release & deploy & create next iteration version
+
+on:
+  workflow_dispatch:
+    # Inputs the workflow accepts.
+    inputs:
+      release_version:
+        description: "Release number version to create"
+        required: true
+      next_version:
+        description: "SNAPSHOT number of the next development version"
+        required: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up JDK 8
+        uses: actions/setup-java@v2
+        with:
+          java-version: '8'
+          distribution: 'adopt'
+      - name: Check compilation
+        run: ./gradlew clean install -x :features:cycle
