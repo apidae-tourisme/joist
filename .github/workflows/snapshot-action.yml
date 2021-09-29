@@ -6,7 +6,7 @@ name: Build and deploy snapshot version of the project
 
 on:
   push:
-    branches: [test-github-actions]
+    branches: [master]
 
 jobs:
   build:
