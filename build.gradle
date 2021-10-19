@@ -1,4 +1,7 @@
 
+import com.amazonaws.auth.*
+import com.amazonaws.auth.profile.*
+
 plugins {
   id "com.github.ben-manes.versions" version "0.17.0"
 }
@@ -11,17 +14,20 @@ subprojects {
   publishing {
     repositories {
       maven {
-        name = "GitHubPackages"
-        url = uri("https://maven.pkg.github.com/apidae-tourisme/joist")
-        credentials {
-          username = System.getenv("GITHUB_USERNAME")
-          password = System.getenv("GITHUB_TOKEN")
+        if (project.version.endsWith('-SNAPSHOT')) {
+           url "s3://apidae-sit-packages.s3.eu-west-3.amazonaws.com/snapshot"
+        } else {
+           url "s3://apidae-sit-packages.s3.eu-west-3.amazonaws.com/release"
+        }
+        credentials(AwsCredentials) {
+          accessKey = System.getenv("AWS_ACCESS_KEY_ID")
+          secretKey = System.getenv("AWS_SECRET_KEY")
         }
       }
-    }
-    publications {
-      gpr(MavenPublication) {
-        from(components.java)
+      publications {
+        gpr(MavenPublication) {
+          from(components.java)
+        }
       }
     }
   }
@@ -65,4 +71,3 @@ subprojects {
 task wrapper(type: Wrapper) {
     gradleVersion = '4.10'
 }
-

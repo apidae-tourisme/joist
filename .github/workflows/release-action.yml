@@ -65,6 +65,11 @@ jobs:
 
       - name: Deploy release
         run: ./gradlew clean publish -x :features:cycle
+        env:
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
+          
       - name: Set SNAPSHOT version
         run: |
           echo $SNAPSHOT > ${GITHUB_WORKSPACE}/domain/version.txt
