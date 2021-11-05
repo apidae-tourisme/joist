@@ -17,7 +17,24 @@ I assert it is still basically a best-in-class ORM in the Java ecosystem, for it
 Artifacts
 =========
 
-The artifacts are available in [Jitpack](https://jitpack.io/#stephenh/joist), i.e. with artifact names of `com.github.stephenh.joist:joist-util:1.14.0`.
+Import dependency using maven:
+
+    <dependencyManagement>
+      <dependencies>
+        <dependency>
+          <groupId>joist</groupId>
+          <artifactId>util</artifactId>
+          <version>1.15.0</version>
+        </dependency>
+      </dependencies>
+    </dependencyManagement>
+
+    <repositories>
+        <repository>
+            <id>bucket-release-repo</id>
+            <url>https://apidae-sit-packages.s3.eu-west-3.amazonaws.com/release</url>
+        </repository>
+    </repositories>
 
 Build against MySQL
 ===================
@@ -59,4 +76,3 @@ Todo
 * Configuration option (global, per-collection) to disable collection ticking
   * ...maybe remove/solve annoyance of cross-collection stomp?
 * Document PostgreSQL/MySQL no fsync settings for faster tests
-
